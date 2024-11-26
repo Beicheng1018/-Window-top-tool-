@@ -179,6 +179,10 @@ void chgCurMove() {
 	SetSystemCursor(LoadCursorFromFile(_T("aero_move_l.cur")), 32512);
 }
 
+void chgCurLink() {
+	SetSystemCursor(LoadCursorFromFile(_T("aero_link_l.cur")), 32512);
+}
+
 
 //改回默认的
 void chgCurBack() {
@@ -189,7 +193,7 @@ void chgCurBack() {
 void CSetTopDlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	chgCurMove();
+	chgCurLink();
 
 	while (1) {//点下时获得窗口的信息
 		if (KEYDOWN(VK_LBUTTON)) {
@@ -227,7 +231,7 @@ void CSetTopDlg::OnBnClickedButton1()
 void CSetTopDlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	chgCurMove();
+	chgCurLink();
 	while (1) {//点下时获得窗口的信息
 		if (KEYDOWN(VK_LBUTTON)) {
 			break;
@@ -241,12 +245,18 @@ void CSetTopDlg::OnBnClickedButton2()
 
 	HWND wnd = ::WindowFromPoint(point);//获得该位置处的wnd窗口句柄
 
+	int hexNum;
+	TCHAR tHexNum[MAX_PATH];
 	TCHAR className[MAX_PATH];
 	TCHAR wndName[MAX_PATH];
+
+	hexNum = (int)wnd;//获得句柄
+	_stprintf(tHexNum, _T("%08X"), hexNum);
 	GetClassName(wnd, className, MAX_PATH);//获得类名
 	::GetWindowText(wnd, wndName, MAX_PATH);//获得窗口名字
 
 	//改变编辑框文本
+	GetDlgItem(IDC_EDIT1)->SetWindowText(tHexNum);
 	GetDlgItem(IDC_EDIT2)->SetWindowText(className);
 	GetDlgItem(IDC_EDIT3)->SetWindowText(wndName);
 
